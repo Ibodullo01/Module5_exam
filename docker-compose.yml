@@ -1,0 +1,34 @@
+version: '3.11'
+
+services:
+  kworkbot:
+    build: .
+    container_name: kwork_bot
+    restart: always
+    environment:
+      BOT_TOKEN: 6828522847:AAF8GyVEzMDxprGr0m5Jov3lnuJMWrrYyg8
+      DB_NAME: postgres
+      DB_PASSWORD: 1
+      DB_HOST: pg
+      DB_PORT: 5432
+      DB_USER: postgres
+      TZ: Asia/Tashkent
+    depends_on:
+      - pg
+    command: python3 main.py
+
+  pg:
+    image: postgres:alpine
+    restart: always
+    container_name: kwork_postgres
+    environment:
+      POSTGRES_PASSWORD: 1
+      TZ: Asia/Tashkent
+    ports:
+      - 5432:5432
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+
+
+volumes:
+  pg_data :
